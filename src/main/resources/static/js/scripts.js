@@ -1,0 +1,3 @@
+function reverseList() {
+  customer.reverse();
+}

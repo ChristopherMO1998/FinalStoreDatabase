@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+
+    <title>Customer Directory</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <h3 style="text-align: center">Customer Directory</h3>
+      <hr />
+
+      <!-- add button -->
+      <div class="d-flex justify-content-between">
+        <a
+          th:href="@{/customers/showFormForAdd}"
+          class="btn btn-primary btn-sm mb-3"
+        >
+          Add Customer
+        </a>
+
+        <a th:href="@{/products/list}" class="btn btn-primary btn-sm mb-3">
+          Products Page
+        </a>
+        <a th:href="@{/main/list}" class="btn btn-primary btn-sm mb-3">
+          Main Page
+        </a>
+        <form th:action="@{/logout}" method="post">
+          <input
+            class="btn btn-primary btn-sm mb-3"
+            type="submit"
+            value="Sign Out"
+          />
+        </form>
+      </div>
+      <div style="margin-bottom: 0.75rem" class="d-flex justify-content-center">
+        <form class="row g-3" th:action="@{/customers/search}" method="get">
+          <div class="col-auto">
+            <input
+              class="form-control"
+              type="text"
+              name="keyword"
+              th:value="${keyword}"
+              placeholder="Search ...."
+              size="50"
+            />
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Reset</button>
+          </div>
+        </form>
+      </div>
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>First Name</th>
+            <th onclick="reverseList()">Last Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="tempCustomer : ${customer}">
+            <td th:text="${tempCustomer.firstName}"></td>
+            <td th:text="${tempCustomer.lastName}"></td>
+            <td th:text="${tempCustomer.email}"></td>
+            <td th:text="${tempCustomer.address}"></td>
+            <td th:text="${tempCustomer.city}"></td>
+            <td th:text="${tempCustomer.state}"></td>
+            <td th:text="${tempCustomer.zip}"></td>
+
+            <td>
+              <div class="column">
+                <div class="col-small">
+                  <!-- add update button/link -->
+                  <form
+                    action="#"
+                    th:action="@{/customers/showFormForUpdate}"
+                    method="post"
+                  >
+                    <input
+                      type="hidden"
+                      name="customerId"
+                      th:value="${tempCustomer.customerId}"
+                    />
+                    <button type="submit" class="btn btn-primary btn-sm">
+                      Update
+                    </button>
+                  </form>
+                </div>
+
+                <div class="col-small">
+                  <!-- add delete button/link -->
+                  <form
+                    action="#"
+                    th:action="@{/customers/delete}"
+                    method="post"
+                  >
+                    <input
+                      type="hidden"
+                      name="customerId"
+                      th:value="${tempCustomer.customerId}"
+                    />
+
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-sm"
+                      onclick="if (!(confirm('Do you really really want to do that?'))) return false"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- <h4><span th:text="${customer.size()}"></span></h4> -->
+        </tbody>
+      </table>
+    </div>
+
+    <script th:src="@{/js/scripts.js}"></script>
+  </body>
+</html>

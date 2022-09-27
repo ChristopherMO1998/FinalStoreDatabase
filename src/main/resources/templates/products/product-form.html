@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+
+    <title>Add an Product</title>
+  </head>
+  <body>
+    <div class="container">
+      <h3 style="text-align: center">Add A New Product</h3>
+      <hr />
+
+      <p class="h4 mb-4">Save product</p>
+
+      <form
+        action="#"
+        th:action="@{/products/save}"
+        th:object="${product}"
+        method="post"
+      >
+        <!-- hidden form field to handle id -->
+        <input type="hidden" th:field="*{productId}" />
+
+        <input
+          type="text"
+          th:field="*{productName}"
+          class="form-control mb-4 col-4"
+          placeholder="Product Name"
+          required
+        />
+        <input
+          type="text"
+          th:field="*{productPrice}"
+          class="form-control mb-4 col-4"
+          placeholder="Product Price"
+          required
+        />
+        <input
+          type="text"
+          th:field="*{productDesc}"
+          class="form-control mb-4 col-4"
+          placeholder="Product Description"
+          required
+        />
+
+        <button
+          type="submit"
+          class="btn btn-info col-2"
+          onclick="if(!(confirm('Save this Product?'))) return false"
+        >
+          Save
+        </button>
+      </form>
+
+      <hr />
+
+      <a th:href="@{/products/list}">Back to all the Products</a>
+    </div>
+  </body>
+</html>
+
+<!-- 
+th:action  location to send form data
+th:object  reference to model attribute
+th:field   bind input field to a property on model attribute 
+-->
